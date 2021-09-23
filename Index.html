@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./CSS/Index.css">
+    <title >Vacinação contra COVID-19</title>
+</head>
+<body>
+    <h1>Vacinação contra COVID-19</h1>
+    <p><strong>Marque aqui sua vacinação!</strong></p>
+    <form>
+        <fieldset >
+            <div>
+                <label for="Nome">Nome: </label>
+                <input type="text" name="Nome" id="nome" class="form" required> 
+            </div>
+            <div>
+                <label for="CPF">CPF: </label> 
+                <input type="text" name="CPF" id="cpf" class="form" required
+                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" \
+                title="Digite um CPF no formato: xxx.xxx.xxx-xx">
+            </div>
+            <div>
+                <label for="Idade">Idade: </label> 
+                <input type="text" name="Idade" id="idade" class="form" required>
+            </div>
+            <div>
+                <label for="Sexo">Sexo: </label>
+                <select name="Sexo" id="sexo" class="form" required>
+                    <option value="">Selecione</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            <div>
+               <label for="Data">Agendamento: </label> 
+               <input type="datetime-local" name="Agendamento" id="agendamento" class="form" required>
+            </div>
+            <div>
+                <Button id="confirmacao" class="form">Confirmação</Button>
+            </div>
+            <div id="msg">
+                <pre></pre>
+            </div>
+        </fieldset>
+    </form>
+    <script>
+        let agendas = [];
+        const addVacinacao = (ev) => {
+            ev.preventDefault();
+            let agenda = {
+                id: Date.now(),
+                nome: document.getElementById('nome').value,
+                cdf: document.getElementById('cpf').value,
+                idade: document.getElementById('idade').value,
+                sexo: document.getElementById('sexo').value,
+                data: document.getElementById('agendamento').value
+            }
+            agendas.push(agenda);
+            document.forms[0].reset();
+
+            console.warn('added', {agendas} );
+            let pre = document.querySelector('#msg pre');
+            pre.textContent = '\n' + JSON.stringify(agendas, '\t', 2);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('confirmacao').addEventListener('click', addVacinacao);
+        });
+    </script>
+</body>
+</html>
